@@ -1,37 +1,32 @@
 package com.tomasbozzo.spring.springbootpreview.service;
 
+import com.tomasbozzo.spring.springbootpreview.repository.UserRepository;
 import com.tomasbozzo.spring.springbootpreview.repository.model.UserEntity;
-import com.tomasbozzo.spring.springbootpreview.web.model.UserResource;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
-
-import static java.util.Collections.singletonList;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private List<UserEntity> users = new ArrayList<>(singletonList(UserEntity.builder()
-            .id(1L)
-            .firstName("Tomás")
-            .lastName("Bozzo")
-            .email("tomasbozzo@fakemail.com")
-            .build()));
+    private final UserRepository repository;
+
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Stream<UserEntity> findAll() {
-        return users.stream();
+        return repository.findAll();
     }
 
     @Override
     public void insert(UserEntity entity) {
-        users.add(entity);
+        repository.save(entity);
     }
 
     @Override
     public void delete(Long id) {
-        users.removeIf(u -> u.getId().equals(id));
+        repository.deleteById(id);
     }
 }
