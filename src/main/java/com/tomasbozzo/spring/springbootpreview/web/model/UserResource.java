@@ -1,6 +1,7 @@
 package com.tomasbozzo.spring.springbootpreview.web.model;
 
 import lombok.*;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,9 +12,7 @@ import javax.validation.constraints.Size;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResource {
-
-    private Long id;
+public class UserResource extends ResourceSupport {
 
     @NotBlank
     @Size(max = 25)

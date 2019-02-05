@@ -1,5 +1,6 @@
 package com.tomasbozzo.spring.springbootpreview.web.controller;
 
+import com.tomasbozzo.spring.springbootpreview.repository.model.UserEntity;
 import com.tomasbozzo.spring.springbootpreview.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,7 +37,12 @@ public class UserControllerTest {
     @Test
     public void testCreateUser() throws Exception {
         // Given
+        UserEntity userEntity = UserEntity.builder().build();
+        when(userService.insert(any(UserEntity.class))).thenReturn(userEntity);
+
         String content = "{\"id\":2,\"firstName\":\"Tomás\",\"lastName\":\"Bozzo\",\"email\":\"tomasbozzo@fakemail.com\"}";
+
+        // When
         mockMvc.perform(post("/users").content(content).contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isCreated())
                 .andReturn();
