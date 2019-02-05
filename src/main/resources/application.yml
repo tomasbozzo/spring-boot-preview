@@ -10,3 +10,16 @@ spring:
     user:
       name: user
       password: password
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: ["health", "info", "metrics"]
+  metrics:
+    web:
+      server:
+        auto-time-requests: false

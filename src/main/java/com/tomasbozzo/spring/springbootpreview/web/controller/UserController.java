@@ -4,6 +4,7 @@ import com.tomasbozzo.spring.springbootpreview.repository.model.UserEntity;
 import com.tomasbozzo.spring.springbootpreview.service.UserService;
 import com.tomasbozzo.spring.springbootpreview.web.ResourceNotFoundException;
 import com.tomasbozzo.spring.springbootpreview.web.model.UserResource;
+import io.micrometer.core.annotation.Timed;
 import lombok.SneakyThrows;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
@@ -20,6 +21,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("users")
+@Timed
 public class UserController {
 
     private final UserService userService;
@@ -29,6 +31,7 @@ public class UserController {
     }
 
     @GetMapping
+    @Timed(value = "users.all", longTask = true, extraTags = { "region", "value" })
     public Resources<UserResource> findAll() {
         List<UserResource> users = userService.findAll()
                 .map(this::toUserResource)
