@@ -6,3 +6,7 @@ spring:
   datasource:
     username: root
     url: jdbc:h2:mem:testdb
+  security:
+    user:
+      name: user
+      password: password

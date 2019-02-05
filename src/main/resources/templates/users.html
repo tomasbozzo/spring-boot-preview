@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>Bootstrap 4 Website Example</title>
     <meta charset="utf-8">
@@ -45,7 +47,7 @@
             <th>Firstname</th>
             <th>Lastname</th>
             <th>Email</th>
-            <th><a th:href="@{/users/create}" href="#" class="btn btn-success" role="button">Create</a></th>
+            <th sec:authorize="isAuthenticated()"><a th:href="@{/users/create}" href="#" class="btn btn-success" role="button">Create</a></th>
         </tr>
         </thead>
         <tbody>
@@ -53,7 +55,7 @@
             <td th:text="${user.firstName}">John</td>
             <td th:text="${user.lastName}">Doe</td>
             <td th:text="${user.email}">john@example.com</td>
-            <td><a th:href="@{/users/delete/{id}(id=${user.id})}" href="#" class="btn btn-danger" role="button">Delete</a></td>
+            <td sec:authorize="isAuthenticated()"><a th:href="@{/users/delete/{id}(id=${user.id})}" href="#" class="btn btn-danger" role="button">Delete</a></td>
         </tr>
         </tbody>
     </table>

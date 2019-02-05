@@ -2,6 +2,7 @@ package com.tomasbozzo.spring.springbootpreview.service;
 
 import com.tomasbozzo.spring.springbootpreview.repository.UserRepository;
 import com.tomasbozzo.spring.springbootpreview.repository.model.UserEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Stream;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(Long id) {
         repository.deleteById(id);
     }
